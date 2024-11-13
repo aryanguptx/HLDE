@@ -1,0 +1,21 @@
+# Packet parsing and network analysis
+scapy
+
+# Data processing and scientific computing
+numpy
+pandas
+
+# Machine learning
+keras
+tensorflow
+scikit-learn
+joblib
+
+# Logging and system utilities
+loguru
+schedule            # For scheduling periodic tasks if needed outside cron
+
+# Optional: System and shell utilities for Pulled Pork integration
+sh                  # To run Pulled Pork shell commands in Python
+
+# Note: If using Pulled Pork, it may need to be installed and configured separately on the system level.

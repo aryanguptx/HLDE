@@ -1,0 +1,2 @@
+alert udp any 2152 -> any any (msg:"Block malicious TEID 54929"; gtp_type:255; byte_test:4,=,0x0a350101,28; byte_test:4,=,0x0a350102,32; sid:718908; rev:1; classification:attempted-admin; priority:1; metadata:service http;)
+alert udp any 2152 -> any any (msg:"Block malicious TEID 53338"; gtp_type:255; byte_test:4,=,0x0a350101,28; byte_test:4,=,0x0a350102,32; sid:684515; rev:1; classification:attempted-admin; priority:1; metadata:service http;)
