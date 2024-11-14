@@ -1,29 +1,31 @@
-# Dockerfile for HLDE with Cron Setup
-FROM python:3.11
+# Use an Ubuntu base image
+FROM ubuntu:latest
 
 # Set the working directory
 WORKDIR /app
 
-# Install dependencies
+# Install Python, cron, rsync, and any dependencies
+RUN apt-get update && \
+    apt-get install -y python3 python3-pip cron rsync && \
+    rm -rf /var/lib/apt/lists/*
+
+# Copy and install Python dependencies
 COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip3 install --no-cache-dir -r requirements.txt
 
-# Install cron
-RUN apt-get update && apt-get install -y cron
-
-# Copy application files
+# Copy the application files
 COPY . /app
 
-# Add the cron job
-RUN echo "*/5 * * * * root python /app/main.py >> /app/logs/cron.log 2>&1" > /etc/cron.d/hlde-cron
+# Create a cron job to run main.py every 1 minute
+RUN echo "* * * * * python3 /app/main.py >> /app/Data/Logs/cron.log 2>&1" > /etc/cron.d/hlde-cron
 
-# Set permissions for cron job
+# Set permissions for the cron job file
 RUN chmod 0644 /etc/cron.d/hlde-cron
 
 # Apply the cron job
 RUN crontab /etc/cron.d/hlde-cron
 
-# Create logs directory for cron logs
+# Create a directory for logs
 RUN mkdir -p /app/logs
 
 # Run the cron daemon in the foreground
